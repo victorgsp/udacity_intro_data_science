@@ -35,15 +35,25 @@ def fix_turnstile_data(filenames):
     for name in filenames:
         with open(name, 'rb') as f:
             reader = csv.reader(f)
+            arrayToWrite = []
             for row in reader:
-                row[0] = "victor"
-                writeFile(row)
-        # your code here
-    # writeFile(row[0])
+                rowStart = [row[0],row[1],row[2]]
+                count = 0
+                newRow = [] + rowStart
+                for i in range(3,len(row)):
+                    newRow.append(row[i].strip())
+                    count = count + 1
+                    if(count == 5):
+                        count = 0
+                        arrayToWrite.append(newRow)                
+                        newRow = [] + rowStart
+            writeFile(arrayToWrite, 'updated_' + name)
 
-def writeFile(interable):
-    with open('some.csv', 'wb') as f:
-        writer = csv.writer(f)
-        writer.writerows(interable)
+def writeFile(outputData, filename):
+    with open(filename, mode='w') as outputFile:
+        data_writer = csv.writer(outputFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        for row in outputData:
+            data_writer.writerow(row)    
+        
 
-fix_turnstile_data(["turnstile_110528.txt"])
+fix_turnstile_data(["turnstile_Test.txt"])
