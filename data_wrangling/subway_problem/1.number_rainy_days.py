@@ -32,4 +32,9 @@ def num_rainy_days(filename):
     
     #Execute your SQL command against the pandas frame
     rainy_days = pandasql.sqldf(q.lower(), locals())
+
+    print(rainy_days)
+    
     return rainy_days
+
+num_rainy_days('weather_underground.csv')
